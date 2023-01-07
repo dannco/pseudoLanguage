@@ -1,0 +1,9 @@
+S ;; N0 | N2 | N5
+N0 ; ae | a | i | u | o | e(3) ; N1(5) | N2
+N1 ; l ; N0 | N2(3)
+N2 ; r | d | g | k | m | t | y ; N3 | O
+N3 ; ir ; O | N0 | N4
+N3 ; ir ; O | N0 | N4
+N4 ; i | o ; O
+
+N5 ; s | sh ; N0
