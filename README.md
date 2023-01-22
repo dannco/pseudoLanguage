@@ -18,5 +18,10 @@ weighted by a value in parentheses next to the node in question.
   - a node that can terminate would add `O` to its links to indicate that the process may end at this point. 
 
 The resource folder holds some CSV-files with examples of STTs, which are implemented in the tests.   
-Might require some touch-up and cleaning but more or less a finished project.  
-Assigning actual meaning to these words is an interesting idea but outside the scope of this project as it was only intended to deal with syntax, not semantics. 
+Might require some touch-up and cleaning but more or less a finished project.   
+
+## Potential expansions/features
+Assigning actual meaning to these words is an interesting idea but outside the scope of this project as it was only intended to deal with syntax, not semantics.   
+
+## TODOs:
+- Add a batch file for drag-drop of STT file and generate an output file with words, and a potentially a log file for debug info.
