@@ -9,10 +9,20 @@ import java.util.stream.IntStream;
 
 public class Language {
 	static final int MAX_TRIES = 10;
+
+	int minLength;
+	int maxLength;
 	String name;
+
+	public Language(int minLength, int maxLength) {
+		this.minLength = minLength;
+		this.maxLength = maxLength;
+	}
 
 	Map<Integer, FsmNode> nodes = new HashMap<>();
 	List<FsmNode> initializers = new ArrayList<>();
+
+	public Language() {}
 
 	public FsmNode createNode(List<String> parts) {
 		FsmNode node = new FsmNode(nodes.size(), parts);
@@ -22,10 +32,11 @@ public class Language {
 
 	public void prepare() {
 		initializers = nodes.values().stream()
-				.filter(FsmNode::isInitializing).collect(Collectors.toList());
+				.filter(FsmNode::isInitializing)
+				.collect(Collectors.toList());
 	}
 
-	public List<String> getWords(int number, int minLength, int maxLength) {
+	public List<String> getWords(int number) {
 		if (initializers.isEmpty()) prepare();
 		Set<String> words = new HashSet<>();
 		int tries = 0;
@@ -96,7 +107,7 @@ public class Language {
 		List<String> rows = new ArrayList<>();
 		rows.add(getInitialSttRow());
 		rows.addAll(nodes.values().stream().sorted(Comparator.comparingInt(FsmNode::getId))
-				.map(FsmNode::toSttRow).collect(Collectors.toList()));
+				.map(FsmNode::toSttRow).toList());
 		return rows;
 	}
 
@@ -136,5 +147,11 @@ public class Language {
 	@Override
 	public int hashCode() {
 		return Objects.hash(nodes.values().stream().map(Object::hashCode).toArray());
+	}
+
+	public Language setRange(int min, int max) {
+		minLength = min;
+		maxLength = max;
+		return this;
 	}
 }

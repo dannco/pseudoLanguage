@@ -34,31 +34,32 @@ public class FsmNode {
 	}
 
 	public String run(int minLength, int maxLengthThreshold) {
-		run++;
 		FsmNode current = this;
 		StringBuilder builder = new StringBuilder();
-		Optional.ofNullable(current.get()).ifPresent(builder::append);
-		System.out.printf("%d: (%d)%s", run, id, builder);
-		boolean terminate = terminates();
-		while (!terminate) {
+		System.out.printf("%d:", ++run);
+		while (!run(current, builder, minLength, maxLengthThreshold)) {
 			current = current.getNextNode();
-			if (Objects.isNull(current))
-				break;
-			System.out.printf(" + (%d)", current.id);
-			String nextStr = current.get();
-			if (Objects.isNull(nextStr))
-				System.out.print("NULL");
-			else {
-				System.out.printf(":%s", nextStr);
-				builder.append(nextStr);
-			}
-			int wordLength = builder.length();
-			terminate = current.terminating && wordLength >= minLength && // basic conditions to terminate
-					(Rng.intInRange(0, Math.max(0, 1 + maxLengthThreshold - wordLength)) == 0
-							|| Rng.intInRange(0, links.size() + 1) == 0)
-					|| current.terminates();
 		}
 		return builder.toString();
+	}
+
+	private boolean run(FsmNode current, StringBuilder builder, int minLength, int maxLengthThreshold) {
+		if (Objects.isNull(current))
+			return false;
+		System.out.printf(" (%d)", current.id);
+		String nextStr = current.get();
+		if (Objects.isNull(nextStr))
+			System.out.print("NULL");
+		else {
+			System.out.printf(":%s", nextStr);
+			builder.append(nextStr);
+		}
+		int wordLength = builder.length();
+		return current.terminating &&
+				wordLength >= minLength
+				&& (Rng.intInRange(0, Math.max(0, 1 + maxLengthThreshold - wordLength)) == 0
+				|| Rng.intInRange(0, links.size() + 1) == 0)
+				|| current.terminates();
 	}
 
 	private FsmNode getNextNode() {
@@ -83,8 +84,8 @@ public class FsmNode {
 
 	public boolean canMakeWord(String word) {
 		List<String> newWords = parts.values().stream().filter(word::startsWith).map(part ->
-			word.substring(part.length())
-		).distinct().collect(Collectors.toList());
+				word.substring(part.length())
+		).distinct().toList();
 		if (newWords.stream().anyMatch(String::isEmpty) && terminating) return true;
 		return newWords.stream().anyMatch(newWord ->
 				links.values().stream().anyMatch(node -> node.canMakeWord(newWord))
@@ -93,7 +94,7 @@ public class FsmNode {
 
 	public void setProperties(boolean initializing, boolean terminating) {
 		this.initializing = initializing;
-		this.terminating = terminating; // must be terminating node if no links are provided
+		this.terminating = terminating;
 	}
 
 	void setLinkByStt(Language lang, String input) {

@@ -1,6 +1,7 @@
-import org.junit.Test;
+
 import language.FsmNode;
 import language.Language;
+import org.junit.jupiter.api.Test;
 import utils.FileUtils;
 import utils.Rng;
 
@@ -11,15 +12,16 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class LanguageTest {
 	private final static String testLanguage = "gibberish.csv";
 
 	@Test
 	public void patriotTest() {
-		Language lang = new Language();
+		Language lang = new Language(1, 15);
 		FsmNode node = lang.createNode(Arrays.asList(
 				"la", "li", "lu", "le", "lo"
 		));
@@ -27,7 +29,7 @@ public class LanguageTest {
 		node.addLink(node);
 		lang.prepare();
 
-		List<String> words = lang.getWords(100, 1, 15);
+		List<String> words = lang.getWords(100);
 
 		assertTrue(lang.isValidWord("lalilulelo"));
 		assertFalse(lang.isValidWord("patriots"));
@@ -36,20 +38,20 @@ public class LanguageTest {
 	@Test
 	public void testModifiedLanguage() {
 		List<String> rows = FileUtils.getFileContents("src/main/resources/languages/gib3.csv");
-		Language language = Language.getLanguageFromStt(rows);
+		Language language = Language.getLanguageFromStt(rows).setRange(2, 9);
 		int desiredWords = 1000;
 		language.prepare();
-		List<String> words = language.getWords(desiredWords, 2, 9);
+		List<String> words = language.getWords(desiredWords);
 		assertEquals(words.size(), desiredWords);
 	}
 	@Test
 	public void testFutharkLanguage() {
 		List<String> rows = FileUtils.getFileContents("src/main/resources/languages/futhark.csv");
-		Language language = Language.getLanguageFromStt(rows);
+		Language language = Language.getLanguageFromStt(rows).setRange(2, 9);
 		int desiredWords = 100;
 		language.prepare();
 		assertFalse(language.isValidWord("s"));
-		List<String> words = language.getWords(desiredWords, 2, 9);
+		List<String> words = language.getWords(desiredWords);
 
 		assertEquals(words.size(), desiredWords);
 	}
@@ -129,9 +131,9 @@ public class LanguageTest {
 
 	@Test
 	public void gibberishTest() {
-		Language lang = gibberishLanguage();
+		Language lang = gibberishLanguage().setRange(2, 7);
 
-		List<String> words = lang.getWords(5000, 2, 7);
+		List<String> words = lang.getWords(5000);
 		assertTrue(words.size() > 500);
 
 		List<String> sentences = IntStream.range(0, 10).mapToObj(i ->
