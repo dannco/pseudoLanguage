@@ -37,7 +37,7 @@ N2 ; oo ; O
 N3 ; r | z ; O
 ```
 
-Mutating STTs would be a way to introduce variety and potential for new words to form. Mutation is generally accomplished by decomposing states, and allowing a state to link to a state that did not previously exist in its paths.  
+Mutating STTs would be a way to introduce variety and potential for new words to form. Mutation is generally accomplished by decomposing states, and allowing a state to link to a state that did not previously exist in its paths. 
 Taking the previous foo|bar|baz example, fully mutating the table without adding any new characters and keeping the language terminating gives
 ```
 S ; _ ; N0 | N1
@@ -49,7 +49,10 @@ N4 ; a ; N3      # new state
 N5 ; o ; N3 | N4 # new state
 ```
 Still allowing for the standard words of foo|bar|baz, it has been expanded to allow far|booz|boar|for|faz among others.  
-Too much mutation to the language might create non-terminating loops, and so it follows that the mutation alghorithm goes together with a proper analytics and validation process to make sure that any changes do not introduce faults in the language.
+It's evident from this small example that mutation can exponentially grow a language's size.  
+Too much mutation to the language might create non-terminating loops, and so it follows that the mutation alghorithm goes together with a proper analytics and validation process to make sure that any changes do not introduce faults in the language. 
+Another method mutation that is non-altering is to randomize the weights in branching states, both in terms of the build step and the link step of the process.
+Lastly, a very altering form of mutation for a language STT is to create completely new states with new syntax. This has the potential to ruin a previously viable language by polluting it with nonsense, so it should be used sparingly if implemented.
 
 ## TODOs:
 - Add a batch file for drag-drop of STT file and generate an output file with words, and a potentially a log file for debug info.
