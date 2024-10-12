@@ -50,8 +50,8 @@ N5 ; o ; N3 | N4 # new state
 ```
 Still allowing for the standard words of foo|bar|baz, it has been expanded to allow far|booz|boar|for|faz among others.  
 It's evident from this small example that mutation can exponentially grow a language's size.  
-Too much mutation to the language might create non-terminating loops, and so it follows that the mutation alghorithm goes together with a proper analytics and validation process to make sure that any changes do not introduce faults in the language. 
-Another method mutation that is non-altering is to randomize the weights in branching states, both in terms of the build step and the link step of the process.
+Too much mutation to the language might create non-terminating loops, and so it follows that the mutation alghorithm goes together with a proper analytics and validation process to make sure that any changes do not introduce faults in the language.   
+Another method mutation that is non-altering is to randomize the weights in branching states, both in terms of the build step and the link step of the process.  
 Lastly, a very altering form of mutation for a language STT is to create completely new states with new syntax. This has the potential to ruin a previously viable language by polluting it with nonsense, so it should be used sparingly if implemented.
 
 ## TODOs:
