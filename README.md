@@ -37,7 +37,7 @@ N2 ; oo ; O
 N3 ; r | z ; O
 ```
 
-Mutating STTs would be a way to introduce variety and potential for new words to form. Mutation is generally accomplished by decomposing states, and allowing a state to link to a state that it did not previously exist in its paths.  
+Mutating STTs would be a way to introduce variety and potential for new words to form. Mutation is generally accomplished by decomposing states, and allowing a state to link to a state that did not previously exist in its paths.  
 Taking the previous foo|bar|baz example, fully mutating the table without adding any new characters and keeping the language terminating gives
 ```
 S ; _ ; N0 | N1
